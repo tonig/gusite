@@ -61,4 +61,14 @@ public class TemplateDataService {
 		return null;
 	}
 
+	public PersonalizacionPlantilla getPlantilla(Microsite microsite, Long idPlantilla, String nombrePlantilla) throws ExceptionFront {
+		if (microsite != null) {
+			for (PersonalizacionPlantilla pp : this.getPlantillasAplicables(microsite)) {
+				if (pp.getId().equals(idPlantilla)) {
+					return pp;
+				}
+			}
+		}
+		return getPlantilla(microsite, nombrePlantilla);
+	}
 }

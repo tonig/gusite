@@ -34,6 +34,7 @@
 
 		<fileset dir="${lib.dir}/webcaib">
 			<include name="ehcache-core-2.3.2.jar"/>
+			<include name="jcommon-1.0.0.jar"/>
 			<include name="jfreechart-1.0.14.jar"/>
 			<include name="struts.jar"/>
             <include name="pdfbox-app-1.8.4.jar"/>
@@ -74,7 +75,10 @@
 		<jar jarfile="${jar.product}/${modul}.jar" basedir="${jar.classes}">
 			<manifest>
 				<attribute name="Created-By" value="Fundació IBIT" />
-				<attribute name="Class-Path" value="lib/jfreechart-1.0.14.jar lib/jcommon-1.0.0.jar" />
+				<attribute name="Class-Path" value="
+					lib/webcaib/jfreechart-1.0.14.jar 
+					lib/webcaib/jcommon-1.0.0.jar
+				" />
 			</manifest>
 		</jar>
 	</target>

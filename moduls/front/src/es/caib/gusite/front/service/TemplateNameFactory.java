@@ -57,6 +57,45 @@ public class TemplateNameFactory {
 		}
 	}
 
+	/**
+	 * Carga la plantilla para el microsite
+	 * 
+	 * @param microsite
+	 * @param plantillaOfragmento
+	 * @return
+	 */
+	public String getPlantilla(Microsite microsite, Long idPlantilla, String plantillaOfragmento) {
+		String plantilla = plantillaOfragmento;
+		String fragmento = "";
+		if (plantillaOfragmento.contains("::")) {
+			// Se trata de un fragment
+			int index = plantillaOfragmento.indexOf("::");
+			plantilla = plantillaOfragmento.substring(0, index).trim();
+			fragmento = plantillaOfragmento.substring(index).trim();
+		}
+		try {
+			final PersonalizacionPlantilla persPlant = this.templateDataService.getPlantilla(microsite, idPlantilla, plantilla);
+			if (persPlant == null) {
+				return plantilla + fragmento;
+			} else {
+				if ("S".equals(microsite.getDesarrollo())) {
+					// En caso de que el microsite esté en modo de desarrollo,
+					// incluimos "template resolver" con caching deshabilitado
+					return "devdb:" + persPlant.getId() + fragmento;
+				} else if (!"S".equals(System.getProperty("es.caib.gusite.front.templateCaching"))) {
+					// Lo mismo no está activado el caché de plantillas para la
+					// instalación
+					return "devdb:" + persPlant.getId() + fragmento;
+				} else {
+					return "db:" + persPlant.getId() + fragmento;
+				}
+			} 
+		} catch (ExceptionFront e) {
+			log.error("Problema obteniendo plantilla:" + plantilla + " para el microsite:" + microsite.getId());
+			return plantilla + fragmento;
+		}
+	}
+
 	public String errorGenerico(Microsite microsite) {
 		return getPlantilla(microsite, TemplateView.ERROR_GENERICO);
 	}
@@ -107,6 +146,10 @@ public class TemplateNameFactory {
 
 	public String contenido(Microsite microsite) {
 		return getPlantilla(microsite, TemplateView.CONTENIDO);
+	}
+
+	public String contenido(Microsite microsite, Long idPlantilla) {
+		return getPlantilla(microsite, idPlantilla, TemplateView.CONTENIDO);
 	}
 
 	public String mostrarNoticia(Microsite microsite) {

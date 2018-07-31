@@ -89,6 +89,10 @@ public class Contenido extends AuditableModel implements Traducible2 {
 	@JoinColumn(name = "CON_MNUCOD")
 	private Menu menu;
 
+	@XmlAttribute
+	@Column(name = "CON_PLANTILLA")
+	private Long plantilla;
+
 	@Transient
 	private String urlExterna = "";
 
@@ -99,7 +103,7 @@ public class Contenido extends AuditableModel implements Traducible2 {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CON_PPLCOD")
 	private PersonalizacionPlantilla personalizacionPlantilla;
-
+	
 	@XmlElement(name = "traducciones")
 	@XmlJavaTypeAdapter(TraduccionAdapter.class)
 	public Map<String, TraduccionContenido> getTranslates() {
@@ -256,6 +260,14 @@ public class Contenido extends AuditableModel implements Traducible2 {
 		} else {
 			return null;
 		}
+	}
+
+	public Long getPlantilla() {
+		return this.plantilla;
+	}
+
+	public void setPlantilla(Long plantilla) {
+		this.plantilla = plantilla;
 	}
 
 }

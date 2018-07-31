@@ -172,8 +172,11 @@ public class ContenidoController extends BaseViewController {
 			view.setContenido(contenido);
 			view.setTipoBeta(tipobeta);
 
-			
-			return this.modelForView(this.templateNameFactory.contenido(microsite), view);
+			if (contenido.getPlantilla().equals(-1L)) {
+				return this.modelForView(this.templateNameFactory.contenido(microsite), view);
+			} else {
+				return this.modelForView(this.templateNameFactory.contenido(microsite, contenido.getPlantilla()), view);
+			}
 		} catch (ExceptionFrontMicro e) {
 			log.error(e.getMessage());
 			return this.getForwardError(view, ErrorMicrosite.ERROR_AMBIT_MICRO, response,URI.uri,lang,request);

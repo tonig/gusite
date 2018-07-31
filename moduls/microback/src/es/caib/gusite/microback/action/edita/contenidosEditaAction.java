@@ -10,9 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.caib.gusite.microback.Microback;
-import es.caib.gusite.microback.utils.Cadenas;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -24,6 +21,7 @@ import es.caib.gusite.microback.actionform.formulario.contenidoForm;
 import es.caib.gusite.microback.ajax.AjaxCheckUriAction;
 import es.caib.gusite.microback.ajax.AjaxCheckUriAction.UriType;
 import es.caib.gusite.microback.base.Base;
+import es.caib.gusite.microback.utils.Cadenas;
 import es.caib.gusite.microback.utils.VOUtils;
 import es.caib.gusite.microintegracion.traductor.TraductorException;
 import es.caib.gusite.microintegracion.traductor.TraductorMicrosites;
@@ -33,14 +31,17 @@ import es.caib.gusite.micromodel.Contenido;
 import es.caib.gusite.micromodel.Idioma;
 import es.caib.gusite.micromodel.Menu;
 import es.caib.gusite.micromodel.Microsite;
+import es.caib.gusite.micromodel.PersonalizacionPlantilla;
 import es.caib.gusite.micromodel.TraduccionContenido;
 import es.caib.gusite.micromodel.TraduccionContenidoPK;
 import es.caib.gusite.micropersistence.delegate.AccesibilidadDelegate;
 import es.caib.gusite.micropersistence.delegate.ContenidoDelegate;
+import es.caib.gusite.micropersistence.delegate.DelegateException;
 import es.caib.gusite.micropersistence.delegate.DelegateUtil;
 import es.caib.gusite.micropersistence.delegate.IdiomaDelegate;
 import es.caib.gusite.micropersistence.delegate.MenuDelegate;
 import es.caib.gusite.micropersistence.delegate.MicrositeDelegate;
+import es.caib.gusite.micropersistence.delegate.PersonalizacionPlantillaDelegate;
 import es.caib.gusite.solrutiles.solr.model.Catalogo;
 
 /**
@@ -68,15 +69,14 @@ public class contenidosEditaAction extends BaseAction
 		ContenidoDelegate contenidoDelegate = DelegateUtil.getContenidoDelegate();
     	MicrositeDelegate micrositeDelegate = DelegateUtil.getMicrositeDelegate();
     	MenuDelegate menuDelegate = DelegateUtil.getMenuDelegate();
-    	
     	contenidoForm contenidoForm = (contenidoForm) form;
+
     	Microsite micrositeBean = (Microsite)request.getSession().getAttribute("MVS_microsite");
     	Contenido contenido = null;
     	
     	//Metemos en el request el CSS que utilizará el tinymce
     	request.setAttribute("MVS_css_tiny",tagCSS(micrositeBean.getEstiloCSS(),micrositeBean.getEstiloCSSPatron()));
     	request.setAttribute("idmicrosite", micrositeBean.getId().toString());
-        
  		try {
 			if 	((String) request.getParameter("accion") != null) {
 
@@ -136,6 +136,7 @@ public class contenidosEditaAction extends BaseAction
 					setMensajesInfo(request, contenidoForm);
 
 					contenidoForm.set("orden", contenido.getOrden());
+					contenidoForm.set("plantilla", contenido.getPlantilla());
 					contenidoForm.set("id", contenido.getId());
 					
 					if (!esNuevo) { //Si es una modificación, hay que volver a prepararlo.
@@ -171,9 +172,10 @@ public class contenidosEditaAction extends BaseAction
 			request.setAttribute("idmicrosite", micrositeBean.getId().toString());
             request.setAttribute("MVS_HS_URL_migapan", hashMigaPan(contenido));
 			request.setAttribute("contenidoForm", contenidoForm);
+
 			//Refresco de parámetro MVS de menú
 			Base.menuRefresh(request);
-			
+
 			return mapping.findForward("detalle");
 
 		} catch (Exception e) {
@@ -193,7 +195,6 @@ public class contenidosEditaAction extends BaseAction
 
     	MenuDelegate menuDelegate = DelegateUtil.getMenuDelegate();
     	ContenidoDelegate contenidoDelegate = DelegateUtil.getContenidoDelegate();
-    	IdiomaDelegate idiomaDelegate = DelegateUtil.getIdiomaDelegate();
     	Contenido contenido = new Contenido();
     	
        //Dar de alta un nuevo contenido
@@ -229,7 +230,8 @@ public class contenidosEditaAction extends BaseAction
     	contenido.setFcaducidad(contenidoForm.getFcaducidad());
     	contenido.setFpublicacion(contenidoForm.getFpublicacion());
     	contenido.setVisible(""+contenidoForm.get("visible"));
-     	
+    	contenido.setPlantilla((Long)contenidoForm.get("plantilla"));
+
     	//si es una modificación solo se cambian los textos
     	if (contenidoForm.get("id") == null) {
     		VOUtils.populate(contenido, contenidoForm);  // form --> bean
@@ -297,7 +299,19 @@ public class contenidosEditaAction extends BaseAction
             contenidoForm.set("orden", new Integer(contenido.getOrden()));
            	contenidoForm.set("idMenu",contenido.getMenu().getId());
            	contenidoForm.set("idmicrosite", micrositeBean.getId());
-            
+           	contenidoForm.set("plantilla", contenido.getPlantilla());
+
+        	PersonalizacionPlantillaDelegate plantillaDelegate = DelegateUtil.getPersonalizacionPlantillaDelegate();
+        	List<PersonalizacionPlantilla> plantillasCombo = new ArrayList<>();
+    		if (micrositeBean.getId() != -1) {
+    	    	try {
+    	    		plantillasCombo = plantillaDelegate.searchByMicrosite(micrositeBean.getId());
+    	    	} catch (DelegateException e) {
+    	    	}
+    		}
+    		contenidoForm.set("plantillasCombo", plantillasCombo);
+
+        	
             VOUtils.describe(contenidoForm, contenido);  // bean --> form    	
     	
     	} else throw new Exception();
@@ -369,7 +383,7 @@ public class contenidosEditaAction extends BaseAction
      * @author Indra
      */
     private void revisaAccesibilidad (HttpServletRequest request, Long idContenido) throws Exception  {	 
-    	
+
     	// Si el contenido tiene errores de accesibilidad,cargamos una lista con los mismos para recorrerla en el jsp
     	AccesibilidadDelegate accDel = DelegateUtil.getAccesibilidadDelegate();
     	IdiomaDelegate ididel = DelegateUtil.getIdiomaDelegate();
@@ -440,7 +454,7 @@ public class contenidosEditaAction extends BaseAction
      * @author Indra
      */
     private void setMensajesInfo (HttpServletRequest request, contenidoForm contenidoForm) throws Exception  {	
-    	
+
     	//Tratamos el contenido del mensaje informativo según la operación que se realiza
 		//Modificación
 		if (request.getParameter("accion").equals(getResources(request).getMessage("operacion.guardar"))

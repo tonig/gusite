@@ -5,6 +5,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="es.caib.gusite.micromodel.Accesibilidad"%>
+<%@page import="es.caib.gusite.micromodel.Plantilla"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -274,7 +275,22 @@
 				<html:text property="orden" maxlength="4" size="8" />
 			</td>
 		</tr>
-
+		<bean:define id="plantillasCombo" name="contenidoForm" property="plantillasCombo" type="java.util.ArrayList" />
+		<% if (plantillasCombo.size() == 0) { %>
+			<input type="hidden" name="plantilla" value="-1" />
+		<% } else { %>
+			<tr>
+				<td class="etiqueta"><bean:message key="conte.plantilla" /> &gt;</td>
+				<td colspan="3">
+					<html:select property="plantilla">
+						<html:option value="-1">Plantilla por defecto</html:option>
+						<html:optionsCollection property="plantillasCombo" value="id" label="titulo"/>
+					</html:select>
+				</td>
+			</tr>
+		<% } %>
+		
+		
 		<tr>
 		<td colspan="4">
 

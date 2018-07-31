@@ -258,6 +258,9 @@
 	    <form-property name="fpublicacion" type="java.lang.String"/>
 	    <form-property name="visible" type="java.lang.String" initial="S"/>
 	    <form-property name="orden" type="java.lang.Integer" initial="0"/>
+	    <form-property name="plantilla" type="java.lang.Long" initial="-1"/>
+	    <form-property name="plantillasCombo" type="java.util.ArrayList"/>
+    	<form-property name="MVS_plantillasCombo" type="java.util.ArrayList"/>
 	    <form-property name="imagenmenu" type="org.apache.struts.upload.FormFile" />
 	    <form-property name="imagenmenuid"  type="java.lang.Long[]"/>		
  	    <form-property name="imagenmenunom" type="java.lang.String[]"/>

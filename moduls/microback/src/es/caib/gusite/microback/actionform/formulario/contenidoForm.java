@@ -17,9 +17,12 @@ import org.apache.struts.action.ActionMapping;
 
 import es.caib.gusite.microback.actionform.TraDynaActionForm;
 import es.caib.gusite.micromodel.Idioma;
+import es.caib.gusite.micromodel.PersonalizacionPlantilla;
 import es.caib.gusite.micromodel.TraduccionContenido;
+import es.caib.gusite.micropersistence.delegate.DelegateException;
 import es.caib.gusite.micropersistence.delegate.DelegateUtil;
 import es.caib.gusite.micropersistence.delegate.IdiomaDelegate;
+import es.caib.gusite.micropersistence.delegate.PersonalizacionPlantillaDelegate;
 
 /**
  *	Formulario para los contenidos
@@ -38,7 +41,6 @@ public class contenidoForm extends TraDynaActionForm {
      */
     public void initialize(ActionMapping actionMapping) {
         super.initialize(actionMapping);
-        inicio();
     }
 
     /* (non-Javadoc)
@@ -50,8 +52,13 @@ public class contenidoForm extends TraDynaActionForm {
         String fecha=(String) get("fpublicacion");
         if (fecha.length()==0){
         	set("fpublicacion", new SimpleDateFormat("dd/MM/yyyy 00:00").format(new java.util.Date()));
-        }	
-        inicio();
+        }
+        String idmicrosite = String.valueOf(request.getAttribute("idmicrosite"));
+        try {
+       	 	inicio(Long.valueOf(idmicrosite));
+        } catch(NumberFormatException nfe) {
+       	 	inicio(-1L);
+        }
     }
     
     /* (non-Javadoc)
@@ -62,10 +69,24 @@ public class contenidoForm extends TraDynaActionForm {
         
          set("fpublicacion", new SimpleDateFormat("dd/MM/yyyy 00:00").format(new java.util.Date()));
         
-        inicio();
+         String idmicrosite = String.valueOf(request.getAttribute("idmicrosite"));
+         try {
+        	 inicio(Long.valueOf(idmicrosite));
+         } catch(NumberFormatException nfe) {
+        	 inicio(-1L);
+         }
     }
 
-    private void inicio() {
+    private void inicio(Long idMicrosite) {
+    	PersonalizacionPlantillaDelegate plantillaDelegate = DelegateUtil.getPersonalizacionPlantillaDelegate();
+    	List<PersonalizacionPlantilla> plantillasCombo = new ArrayList<>();
+		if (idMicrosite != -1) {
+	    	try {
+	    		plantillasCombo = plantillaDelegate.searchByMicrosite(idMicrosite);
+	    	} catch (DelegateException e) {
+	    	}
+		}
+    	set("plantillasCombo", plantillasCombo);
     }
    
     /* (non-Javadoc)
@@ -159,5 +180,5 @@ public class contenidoForm extends TraDynaActionForm {
             return null;
         }
     }    
-    
+
 }
