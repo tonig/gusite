@@ -51,7 +51,7 @@ Para obtener las nuevas funcionalidades de plantillas asociadas a los contenidos
 
 **Nota:** En el repositorio con los cambios nuevos habrá que realizar los pasos 1, 2, 7, 8, 9, 10, 11, 12, 13, 14 anteriores.
 
-# Nueva funcionalidad de plantillas para contenidos
+## Nueva funcionalidad de plantillas para contenidos
 
 Esta funcionalidad se basa en poder definir una plantilla distinta para cada uno de los contenidos que están asociados a un microsite.
 
@@ -64,3 +64,20 @@ Una vez rellenada la información necesaria para el contenido, en el microsite d
 **Nota:** Para poder activar o desactivar el mockeo que las unidades administrativas, se ha puesto un parametro en jboss-service.xml para poder configurarlo:
 - es.caib.gusite.api.rolsac.mock=S => realizará el mock de las unidades administrativas
 - es.caib.gusite.api.rolsac.mock=X => sin valor, con otro valor distinto de S o si no existe, el mock no se realizará.
+
+## Posible solución de errores
+
+- Cabe la posibilidad de que no pueda descargarse las librerias rolsacAPI o solrapi, si es el caso, habra que coger las librerias e instalarla de forma local en el repositorio con las siguientes instrucciones:
+
+	```mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>```
+
+	sustituyendo los campos entre <> por los valores correspondientes.
+
+
+
+- Errores de tipo, No se han podido encontrar las unidades administrativas. Esto es producido cuando tiene problemas con el Mockeo, hay que comprobar que se ha puesto bien la variable de entorno es.caib.gusite.api.rolsac.mock ya que es la que nos indica que debe ser mockeado.
+
+- Error de compilación en linea 38 de la clase MiUnitatAdministrativaQueryServiceStrategy.
+Este problema surge cuando se usa una versión distinta de sac-api-client. La solución pasa por incluir la versión correcta en el directorio lib o eliminar el método public List<ServicioDTO> llistarServicios(long arg0, ServicioCriteria arg1) de la clase MiUnitatAdministrativaQueryServiceStrategy (lineas de la 38 a la 41).
+
+
