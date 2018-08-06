@@ -1,5 +1,6 @@
 package es.caib.gusite.plugins.rolsac;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +22,6 @@ import es.caib.rolsac.api.v2.idioma.IdiomaCriteria;
 import es.caib.rolsac.api.v2.idioma.IdiomaQueryServiceAdapter;
 import es.caib.rolsac.api.v2.rolsac.RolsacQueryService;
 import es.caib.rolsac.api.v2.unitatAdministrativa.UnitatAdministrativaCriteria;
-import es.caib.rolsac.api.v2.unitatAdministrativa.UnitatAdministrativaDTO;
 import es.caib.rolsac.api.v2.unitatAdministrativa.UnitatAdministrativaOrdenacio;
 import es.caib.rolsac.api.v2.unitatAdministrativa.UnitatAdministrativaQueryServiceAdapter;
 
@@ -31,7 +31,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 	private static Log log = LogFactory.getLog(RolsacOrganigramaProvider.class);
 	static public final String UO_PORTAVOZ="270677";  // caib: 270677 nuestra: 51079
 	private static final String DEFAULT_IDIOMA = "ca";
-	
+
 	@Override 
 	public Collection<UnidadListData> getUnidades (String lang) throws PluginException {
 		try {
@@ -39,10 +39,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			IdiomaCriteria idiomaCriteria =  new IdiomaCriteria();
 			idiomaCriteria.setIdioma(lang);
 			idiomaCriteria.setCodigoEstandar(lang);
-			List<IdiomaQueryServiceAdapter> idiomas = new ArrayList<>();
-			if (!APIUtil.isMock()) {
-				idiomas = rqs.llistarIdiomes(idiomaCriteria);
-			}
+			List<IdiomaQueryServiceAdapter> idiomas = rqs.llistarIdiomes(idiomaCriteria);
 			if (idiomas.size() < 1) {
 				lang = DEFAULT_IDIOMA;
 				//throw new PluginException("Idioma " + lang + " no soportado en ROLSAC");
@@ -51,18 +48,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			UnitatAdministrativaCriteria uaCriteria = new UnitatAdministrativaCriteria();
 			uaCriteria.setOrdenar(new UnitatAdministrativaOrdenacio[] {UnitatAdministrativaOrdenacio.orden_asc});
 			uaCriteria.setIdioma(lang);
-			List<UnitatAdministrativaQueryServiceAdapter> listaUAs = new ArrayList<>();
-
-			UnitatAdministrativaQueryServiceAdapter uaqsa = null;
-			if (APIUtil.isMock()) {
-				uaqsa = getMockUnitatAdministrativaQueryServiceAdapter();
-				listaUAs.add(uaqsa);
-			} else {
-				listaUAs = rqs.llistarUnitatsAdministratives(uaCriteria);
-			}
-			// Comentado para usar Mocks
-//			List<UnitatAdministrativaQueryServiceAdapter> listaUAs = rqs.llistarUnitatsAdministratives(uaCriteria);
-
+			List<UnitatAdministrativaQueryServiceAdapter> listaUAs = rqs.llistarUnitatsAdministratives(uaCriteria);
 			Collection<UnidadListData> nuevasUAs = new ArrayList<UnidadListData>();
 
 			// La conselleria de Portavoz se trata a parte.
@@ -77,7 +63,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			throw new PluginException("No se han podido obtener las unidades principales ROLSAC", e);
 		}
 	}
-	
+
 	@Override 
 	public Collection<UnidadListData> getUnidadesPrincipales(String lang) throws PluginException {
 
@@ -86,10 +72,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			IdiomaCriteria idiomaCriteria =  new IdiomaCriteria();
 			idiomaCriteria.setIdioma(lang);
 			idiomaCriteria.setCodigoEstandar(lang);
-			List<IdiomaQueryServiceAdapter> idiomas = new ArrayList<>();// rqs.llistarIdiomes(idiomaCriteria);
-			if (!APIUtil.isMock()) {
-				idiomas = rqs.llistarIdiomes(idiomaCriteria);
-			}
+			List<IdiomaQueryServiceAdapter> idiomas = rqs.llistarIdiomes(idiomaCriteria);
 			if (idiomas.size() < 1) {
 				lang = DEFAULT_IDIOMA;
 				//throw new PluginException("Idioma " + lang + " no soportado en ROLSAC");
@@ -105,14 +88,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			uaCriteria.setIdioma(lang);
 			uaCriteria.setId(UO_GOVERN_IB.toString());
 
-			UnitatAdministrativaQueryServiceAdapter ua = null;
-			if (APIUtil.isMock()) {
-				ua = getMockUnitatAdministrativaQueryServiceAdapter();
-			} else {
-				ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
-			}
-			// Comentado para usar Mocks
-			//UnitatAdministrativaQueryServiceAdapter ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
+			UnitatAdministrativaQueryServiceAdapter ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
 			
 			if (ua == null) {
 				throw new RuntimeException("No se ha encontrado la uo govern, la propiedad de sistema es.caib.gusite.codigoUO.govern es:" + idUOGovern);
@@ -152,10 +128,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			IdiomaCriteria idiomaCriteria =  new IdiomaCriteria();
 			idiomaCriteria.setIdioma(lang);
 			idiomaCriteria.setCodigoEstandar(lang);
-			List<IdiomaQueryServiceAdapter> idiomas = new ArrayList<>();// rqs.llistarIdiomes(idiomaCriteria);
-			if (!APIUtil.isMock()) {
-				idiomas = rqs.llistarIdiomes(idiomaCriteria);
-			}
+			List<IdiomaQueryServiceAdapter> idiomas = rqs.llistarIdiomes(idiomaCriteria);
 			if (idiomas.size() < 1) {
 				lang = DEFAULT_IDIOMA;
 				//throw new PluginException("Idioma " + lang + " no soportado en ROLSAC");
@@ -165,15 +138,7 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			uaCriteria.setIdioma(lang);
 			uaCriteria.setId(unidadId.toString());
 
-			UnitatAdministrativaQueryServiceAdapter ua = null;
-			if (APIUtil.isMock()) {
-				ua = getMockUnitatAdministrativaQueryServiceAdapter();
-			} else {
-				ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
-			}
-			
-			// Comentado para usar Mocks
-//			UnitatAdministrativaQueryServiceAdapter ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
+			UnitatAdministrativaQueryServiceAdapter ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
 			UnitatAdministrativaCriteria uaCriteriaFilles = new UnitatAdministrativaCriteria();
 			uaCriteriaFilles.setIdioma(lang);
 			uaCriteriaFilles.setOrdenar(new UnitatAdministrativaOrdenacio[] {UnitatAdministrativaOrdenacio.orden_asc});
@@ -199,7 +164,6 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 	@Override
 	public UnidadData getUnidadData(Serializable unidadId, String lang) throws PluginException {
 
-
 		try {
 			// DIRECCION DEL PIE DE PAGINA
 	
@@ -210,16 +174,8 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 			Long coduo = Long.valueOf(String.valueOf(unidadId));
 			uaCriteria.setId(String.valueOf(coduo));
 			uaCriteria.setIdioma(lang);
-
-			UnitatAdministrativaQueryServiceAdapter ua = null;
-			if (APIUtil.isMock()) {
-				ua = getMockUnitatAdministrativaQueryServiceAdapter();
-			} else {
-				ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
-			}
-			// Comentado para usar Mocks
-//			UnitatAdministrativaQueryServiceAdapter ua;
-//			ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
+			UnitatAdministrativaQueryServiceAdapter ua;
+			ua = rqs.obtenirUnitatAdministrativa(uaCriteria);
 
 			if (ua == null) {
 				//No se encuentra la unidad administrativa
@@ -303,48 +259,4 @@ public class RolsacOrganigramaProvider implements OrganigramaProvider {
 		return unidadData;
 	} 
 	
-
-	private UnitatAdministrativaQueryServiceAdapter getMockUnitatAdministrativaQueryServiceAdapter() throws QueryServiceException {
-		UnitatAdministrativaDTO uaDto = new UnitatAdministrativaDTO();
-		uaDto.setAbreviatura("ddorado");
-		uaDto.setAdministracionRemota(1L);
-		uaDto.setBusinessKey("1");
-		uaDto.setClaveHita("1");
-		uaDto.setCodigoEstandar("1");
-		uaDto.setCvResponsable("ddorado");
-		uaDto.setDominio("localhost");
-		uaDto.setEmail("ddorado@at4.net");
-		uaDto.setEspacioTerrit(1L);
-		uaDto.setFax("1");
-		uaDto.setFotog(1L);
-		uaDto.setFotop(1L);
-		uaDto.setId(1L);
-		uaDto.setIdExterno(1L);
-		uaDto.setIdioma("ca");
-		uaDto.setLogoh(1L);
-		uaDto.setLogos(1L);
-		uaDto.setLogot(1L);
-		uaDto.setLogov(1L);
-		uaDto.setNombre("ddorado");
-		uaDto.setNumfoto1(1);
-		uaDto.setNumfoto2(1);
-		uaDto.setNumfoto3(1);
-		uaDto.setNumfoto4(1);
-		uaDto.setOrden(1L);
-		uaDto.setPadre(1L);
-		uaDto.setPresentacion("ddorado");
-		uaDto.setResponsable("ddorado");
-		uaDto.setResponsableEmail("ddorado@at4.net");
-		uaDto.setSexoResponsable(1);
-		uaDto.setTelefono("1");
-		uaDto.setTratamiento(1L);
-		uaDto.setUrl("http://localhost:8080");
-		uaDto.setUrlRemota("http://localhost:8080");
-		uaDto.setValidacion(1);
-
-		UnitatAdministrativaQueryServiceAdapter ua = new UnitatAdministrativaQueryServiceAdapter(uaDto);
-		ua.setUnitatAdministrativaQueryServiceStrategy(new MiUnitatAdministrativaQueryServiceStrategy());
-		return ua;
-	}
-
 }

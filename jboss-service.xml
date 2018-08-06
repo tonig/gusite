@@ -3,8 +3,6 @@
         
     <!-- Set properties using the properties file style. -->
     <attribute name="Properties">
-	   es.caib.gusite.api.rolsac.mock=S
-
 	   es.caib.gusite.integracion.traductor=S
 	   es.caib.gusite.integracion.traductor.servidor=scatwnt1.caib.es:8080
 	   

@@ -69,8 +69,4 @@ public class APIUtil {
     	return eis;
 	}
 
-    public static boolean isMock() {
-    	String mock = System.getProperty("es.caib.gusite.api.rolsac.mock");
-    	return "S".equalsIgnoreCase(mock);
-    }
 }
