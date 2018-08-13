@@ -60,6 +60,7 @@
 			<th><bean:message key="conte.nombrearchi" /></th>
 			<th><bean:message key="conte.pesoarchi" /></th>
 			<th><bean:message key="conte.url" /></th>
+			<th>NEW <bean:message key="conte.url" /></th>
 		</tr>
 	</thead>	
 	<tbody id="listadoArchivos">
@@ -91,6 +92,7 @@
 		<td><bean:write name="i" property="nombre"/></td>
 		<td><bean:write name="i" property="peso"/>&nbsp;Kb</td>
 		<td>archivopub.do?ctrl=MCRST<bean:write name="MVS_microsite" property="id"/>ZI<bean:write name="i" property="id"/>&id=<bean:write name="i" property="id"/></td>
+		<td>archivopub.do?nombre=<bean:write name="i" property="nombre"/>&uri=<bean:write name="MVS_microsite" property="uri"/></td>
 		</tr>
 	</logic:iterate>
 	</tbody>

@@ -52,7 +52,7 @@
 	-->
         <rule>
             <from>/(.*)/archivopub.do?(.*)</from>
-            <to>/archivopub.do?$2</to>
+            <to>/archivopub.do?$2&amp;nombresite=$1</to>
         </rule>
         
 	<!--  

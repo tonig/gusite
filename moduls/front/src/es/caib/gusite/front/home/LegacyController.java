@@ -1,5 +1,6 @@
 package es.caib.gusite.front.home;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -1298,6 +1299,98 @@ public class LegacyController extends FrontController {
 
 	}
 
+	/**
+	 * Urls de contenido antiguo.
+	 * archivopub.do?ctrl=MCRST449ZI63868&amp;id=63868
+	 * 
+	 */
+/*	@RequestMapping(value = "archivopub.do", params = { Microfront.PCTRL, "id", "nombre" })
+	public String archivopub(@RequestParam(Microfront.PCTRL) String ctrl, @RequestParam("id") Long id, @RequestParam("nombre") String nombre, Model model, HttpServletResponse response, final HttpServletRequest req) {
+
+		Microsite microsite = null;
+		try {
+			log.info("url de llamada al servicio: " + req.getRequestURI());
+
+			Long idSite = this.idSiteFromCtrl(ctrl);
+
+			microsite = this.dataService.getMicrosite(idSite, DEFAULT_IDIOMA);
+			if (microsite == null) {
+				if (idSite == null) {
+					throw new ExceptionFrontMicro();	
+				}
+				throw new ExceptionFrontMicro(ErrorMicrosite.ERROR_MICRO_URI_MSG + idSite);				
+			}
+			
+			String url = this.urlFactory.archivopubByNombre(microsite, nombre);
+			log.info("url de redireccion: " + url);
+			return "redirect:" + url;
+
+		} catch (ExceptionFrontMicro e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_MICRO, response);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_SERVER, response);
+		} 
+
+	}
+*/
+	@RequestMapping(value = "archivopub.do", params = { "nombre", "nombresite" })
+	public String archivopub(@RequestParam("nombre") String nombre, @RequestParam("nombresite") String nombresite, Model model, HttpServletResponse response) {
+		String ctrlReal = "";
+		Microsite microsite = null;
+		try {
+			nombresite = obtenNombreSite(nombresite);
+			microsite = this.dataService.getMicrositeByUri(nombresite, DEFAULT_IDIOMA);
+			if (microsite == null) {
+				throw new ExceptionFrontMicro(ErrorMicrosite.ERROR_MICRO_URI_MSG + nombresite);				
+			}
+			String url = this.urlFactory.archivopubByNombre(microsite, nombre);
+			log.info("url de redireccion: " + url);
+			return "redirect:" + url;
+		} catch (ExceptionFrontMicro e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_MICRO, response);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_SERVER, response);
+		} 
+	}
+	
+	@RequestMapping(value = "archivopub.do", params = { Microfront.PCTRL, "id", "nombresite" })
+	public String archivopub(@RequestParam(Microfront.PCTRL) String ctrl, @RequestParam("id") Long id, @RequestParam("nombresite") String nombresite, Model model, HttpServletResponse response) {
+		String ctrlReal = "";
+		Microsite microsite = null;
+		try {
+			nombresite = obtenNombreSite(nombresite);
+			microsite = this.dataService.getMicrositeByUri(nombresite, DEFAULT_IDIOMA);
+			if (microsite == null) {
+				if (nombresite == null) {
+					throw new ExceptionFrontMicro();	
+				}
+				throw new ExceptionFrontMicro(ErrorMicrosite.ERROR_MICRO_URI_MSG + nombresite);				
+			}
+			ctrlReal = ctrlFromIdSite(microsite.getId(), id);
+		} catch (ExceptionFrontMicro e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_MICRO, response);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_SERVER, response);
+		} 
+		return archivopub(ctrlReal, id, model, response);
+	}
+	
+	@RequestMapping(value = "archivopub.do", params = { Microfront.PCTRL, "id", "nombre", "nombresite" })
+	public String archivopub(@RequestParam(Microfront.PCTRL) String ctrl, @RequestParam("id") Long id, @RequestParam("nombre") String nombre, @RequestParam("nombresite") String nombresite, Model model, HttpServletResponse response, final HttpServletRequest req) {
+		return archivopub(nombre, nombresite, model, response);
+	}
+
+	@RequestMapping(value = "archivopub.do", params = { "nombre", "uri", "nombresite" })
+	public String archivopub(@RequestParam("nombre") String nombre, @RequestParam("uri") String uri, @RequestParam("nombresite") String nombresite, Model model, HttpServletResponse response) {
+		return archivopub(nombre, uri, model, response);
+	}
+
 	private Long idSiteFromCtrl(String ctrl) {
 
 		String what = ctrl.substring(0, 5);
@@ -1334,6 +1427,10 @@ public class LegacyController extends FrontController {
 
 		// No debería llegar aquí
 		return new Long(0);
+	}
+
+	private String ctrlFromIdSite(Long idMicosite, Long id) {
+		return Microfront.RCONTENIDO+idMicosite+Microfront.separatordocs+id;
 	}
 
 	/**
@@ -1456,6 +1553,14 @@ public class LegacyController extends FrontController {
 			log.error(e.getMessage());
 			return this.getForwardError(microsite, lang, model, ErrorMicrosite.ERROR_AMBIT_SERVER, response);
 		} 
+	}
+	
+	private String obtenNombreSite(String nombreEntero) throws ExceptionFrontMicro {
+		if (nombreEntero == null) {
+			throw new ExceptionFrontMicro();	
+		}
+		return nombreEntero.indexOf("/") > 0 ? nombreEntero.substring(0, nombreEntero.indexOf("/")) : nombreEntero;
+
 	}
 
 

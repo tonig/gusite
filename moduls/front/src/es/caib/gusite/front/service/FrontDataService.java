@@ -239,7 +239,7 @@ public class FrontDataService {
 		String wherenoticias = "where noti.visible = 'S' and noti.idmicrosite = " + microsite.getId();
 		wherenoticias += " and (noti.fpublicacion is null OR to_char(noti.fpublicacion,'yyyy-MM-dd')<='" + dt + "')";
 		wherenoticias += " and (noti.fcaducidad is null OR to_char(noti.fcaducidad,'yyyy-MM-dd')>='" + dt + "')";
-		wherenoticias += " and (noti.tipo.tipoelemento = " + Front.ELEM_NOTICIA + " )";
+		wherenoticias += " and (noti.tipo.tipoelemento = '" + Front.ELEM_NOTICIA + "' )";
 		noticiadel.setWhere(wherenoticias);
 		noticiadel.setOrderby2(" order by noti.fpublicacion desc");
 
