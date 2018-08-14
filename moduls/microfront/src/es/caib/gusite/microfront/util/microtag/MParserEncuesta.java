@@ -15,9 +15,11 @@ import org.apache.commons.logging.LogFactory;
 import es.caib.gusite.microfront.Microfront;
 import es.caib.gusite.microfront.util.Fechas;
 import es.caib.gusite.micromodel.Encuesta;
+import es.caib.gusite.micromodel.Microsite;
 import es.caib.gusite.micromodel.Pregunta;
 import es.caib.gusite.micromodel.Respuesta;
 import es.caib.gusite.micromodel.TraduccionEncuesta;
+import es.caib.gusite.micromodel.TraduccionNoticia;
 import es.caib.gusite.micromodel.TraduccionPregunta;
 import es.caib.gusite.micromodel.TraduccionRespuesta;
 import es.caib.gusite.micropersistence.delegate.DelegateUtil;
@@ -141,7 +143,9 @@ public class MParserEncuesta extends MParserHTML {
 				scriptValidar.append("} \n \n");
 				
 				scriptValidar.append("function validaencuesta(){\n var txtError = \"\"; \n");
-				
+
+				Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
+
 				Iterator iter = encuesta.getPreguntas().iterator();
 			    while (iter.hasNext()) { // Preguntas de una encuesta
 			    	
@@ -184,7 +188,7 @@ public class MParserEncuesta extends MParserHTML {
 			    		retorno.append("<h3>" + ((pregunta.getTraduce()!=null)?((TraduccionPregunta)pregunta.getTraduce()).getTitulo() + " " + obligatoriedad:"&nbsp;") + "</h3>\n");
 						
 			    		if (pregunta.getImagen()!=null) {
-			    			retorno.append("<p><img src=\"archivopub.do?ctrl=MCRST" + idmicrosite + "ZI" + pregunta.getImagen().getId() + "&id=" + pregunta.getImagen().getId() + "\" alt=\"\" /></p>\n");
+			    			retorno.append("<p><img src=\"" + MicroURI.uriImg(pregunta.getImagen().getNombre(), microsite.getUri()) + "\" alt=\"\" /></p>\n");
 			    		}
 			    		
 			    		retorno.append("<ul>\n");

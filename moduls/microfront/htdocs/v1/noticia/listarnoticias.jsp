@@ -46,7 +46,7 @@
 												<logic:notEmpty name="i" property="traduce.titulo">
 													<li style="list-style: none;">
 													<logic:notEmpty name="i" property="imagen">
-														<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />" alt="" width="48" height="48" align="middle"/>
+														<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />&amp;nombre=<bean:write name="i" property="imagen.nombre" />" alt="" width="48" height="48" align="middle"/>
 													</logic:notEmpty>
 													<logic:empty name="i" property="imagen"  >
 														<img src="imgs/noticies/news.gif" alt="" align="middle"/>

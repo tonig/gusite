@@ -459,6 +459,7 @@
 					<th><bean:message key="conte.nombrearchi" /></th>
 					<th><bean:message key="conte.pesoarchi" /></th>
 					<th><bean:message key="conte.url" /></th>
+					<th>NEW <bean:message key="conte.url" /></th>
 				</tr>
 			</thead>	
 			<tbody id="listadoArchivos">
@@ -499,6 +500,7 @@
 				<td><bean:write name="i" property="nombre"/></td>
 				<td><bean:write name="i" property="peso"/>&nbsp;Kb</td>
 				<td>archivopub.do?ctrl=MCRST<bean:write name="MVS_microsite" property="id"/>ZI<bean:write name="i" property="id"/>&id=<bean:write name="i" property="id"/></td>
+				<td>archivopub.do?nombre=<bean:write name="i" property="nombre"/>&uri=<bean:write name="MVS_microsite" property="uri"/></td>
 				</tr>
 			</logic:iterate>
 			</tbody>
@@ -627,11 +629,11 @@ var mensa3='<bean:message key="conte.nuevoarchimensa"/>';
 
 		<logic:present name="contenidoForm" property="id">
 				url+="<a href=\"archivopub.do?ctrl=CNTSP";
-				url+=document.contenidoForm.id.value+"ZI"+id+"&id="+id+"\">"+nom+"</a>";		
+				url+=document.contenidoForm.id.value+"ZI"+id+"&id="+id+"&nombre="+nom+"\">"+nom+"</a>";		
 		</logic:present>
 		<logic:notPresent name="contenidoForm" property="id">
 				url+="<a href=\"archivopub.do?ctrl=MCRST";
-				url+="<bean:write name="MVS_microsite" property="id"/>ZI"+id+"&id="+id+"\">"+nom+"</a>";		
+				url+="<bean:write name="MVS_microsite" property="id"/>ZI"+id+"&id="+id+"&nombre="+nom+"\">"+nom+"</a>";		
 		</logic:notPresent>
 
 		var orden;
@@ -647,11 +649,11 @@ var mensa3='<bean:message key="conte.nuevoarchimensa"/>';
 	    
 		<logic:present name="contenidoForm" property="id">
 			var url="<img src=\"archivopub.do?ctrl=CNTSP";
-			url+=document.contenidoForm.id.value+"ZI"+id+"&id="+id+"\">";
+			url+=document.contenidoForm.id.value+"ZI"+id+"&id="+id+"&nombre="+nom+"\">";
 		</logic:present>
 		<logic:notPresent name="contenidoForm" property="id">
 			var url="<img src=\"archivopub.do?ctrl=MCRST";
-			url+="<bean:write name="MVS_microsite" property="id"/>ZI"+id+"&id="+id+"\">";
+			url+="<bean:write name="MVS_microsite" property="id"/>ZI"+id+"&id="+id+"&nombre="+nom+"\">";
 		</logic:notPresent>
 		
 		var orden;

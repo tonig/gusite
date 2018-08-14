@@ -91,7 +91,7 @@
 									</h4>
 									</logic:notEmpty>
 									<logic:notEmpty name="MVS_noticia" property="imagen">
-										<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="imagen.id" />&amp;id=<bean:write name="MVS_noticia" property="imagen.id" />" alt="<bean:write name="MVS_noticia" property="traduce.titulo" ignore="true" filter="false"/>"  align="middle"/>
+										<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="imagen.id" />&amp;id=<bean:write name="MVS_noticia" property="imagen.id" />&amp;nombre=<bean:write name="MVS_noticia" property="imagen.nombre" />" alt="<bean:write name="MVS_noticia" property="traduce.titulo" ignore="true" filter="false"/>"  align="middle"/>
 									</logic:notEmpty>
 									<logic:notEqual name="MVS_forzarmapa" value="true">
 										<logic:notEmpty name="MVS_noticia" property="traduce.texto">	
@@ -102,7 +102,7 @@
 										<logic:notEmpty name="MVS_noticia" property="traduce.docu">
 											<p><bean:message key="noticia.descdocumento"/></p>
 											<p><bean:message key="general.archivo"/> <bean:write name="MVS_noticia" property="traduce.docu.mime" />, <bean:write name="MVS_noticia" property="traduce.docu.peso" /> bytes - 
-											<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;id=<bean:write name="MVS_noticia" property="traduce.docu.id" />" target="blank"><bean:write name="MVS_noticia" property="traduce.docu.nombre" /></a></p>
+											<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;id=<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;nombre=<bean:write name="MVS_noticia" property="traduce.docu.nombre" />" target="blank"><bean:write name="MVS_noticia" property="traduce.docu.nombre" /></a></p>
 										</logic:notEmpty>
 									</logic:notEqual>
 								</div>

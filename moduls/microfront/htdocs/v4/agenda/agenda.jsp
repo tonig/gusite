@@ -117,13 +117,13 @@
 														 
 														 
 														<logic:notEmpty name="i" property="traduce.imagen">
-															<img id="imgNoticia" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.imagen.id" />&amp;id=<bean:write name="i" property="traduce.imagen.id" />" alt="" />							
+															<img id="imgNoticia" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.imagen.id" />&amp;id=<bean:write name="i" property="traduce.imagen.id" />&amp;nombre=<bean:write name="i" property="traduce.imagen.nombre" />" alt="" />							
 														</logic:notEmpty>
 														<p><bean:write name="i" property="traduce.descripcion" filter="false"/></p>
 														<logic:notEmpty name="i" property="traduce.documento">
 															<p><bean:message key="agenda.descdocumento"/></p>
 															<p><bean:message key="general.archivo"/> <bean:write name="i" property="traduce.documento.mime" />, <bean:write name="i" property="traduce.documento.peso" /> bytes - 
-															<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.documento.id" />&amp;id=<bean:write name="i" property="traduce.documento.id" />" target="blank"><bean:write name="i" property="traduce.documento.nombre" /></a></p>
+															<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.documento.id" />&amp;id=<bean:write name="i" property="traduce.documento.id" />&amp;nombre=<bean:write name="i" property="traduce.documento.nombre" />" target="blank"><bean:write name="i" property="traduce.documento.nombre" /></a></p>
 														</logic:notEmpty>
 														<logic:notEmpty name="i" property="traduce.url">
 															<bean:define id="externa" name="i" property="traduce.url" type="java.lang.String" />

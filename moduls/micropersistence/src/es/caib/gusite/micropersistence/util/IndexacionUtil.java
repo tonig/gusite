@@ -218,6 +218,7 @@ public class IndexacionUtil {
     		url = "/sites/"+ micro.getUri()  + "/f/" + archivo.getId();	    		
     	} else {
     		url = "/sacmicrofront/archivopub.do?ctrl=MCRST"+micro.getId()+ "ZI" +archivo.getId() +"&id=" + archivo.getId();
+//    		url = "/sacmicrofront/" + MicroURI.uriImg("MCRST", micro.getId(), archivo.getId());
     	}
     	
     	return url;
@@ -364,10 +365,12 @@ public class IndexacionUtil {
     			String idFoto = noticia.getImagen() !=null && noticia.getImagen().getId() !=null ? noticia.getImagen().getId().toString() : "";
     			url = "/sacmicrofront/archivopub.do?ctrl=MCRST"+micro.getId() +"ZI" + idFoto
 	    				+"&id="+idFoto;
+//    			url = "/sacmicrofront/" + MicroURI.uriImg("MCRST", micro.getId(), Long.parseLong(idFoto));
     		}else if (noticia.getTipo().getTipoelemento().equals(Tipo.TIPO_DOCUMENTOS)){
     			String idDocu = traduccion.getDocu() !=null && traduccion.getDocu().getId() !=null ? traduccion.getDocu().getId().toString() : "";
     			url = "/sacmicrofront/archivopub.do?ctrl=MCRST"+micro.getId() +"ZI" + idDocu
 	    				+"&id="+idDocu;
+//    			url = "/sacmicrofront/" + MicroURI.uriImg("MCRST", micro.getId(), Long.parseLong(idDocu));
     		}else if (noticia.getTipo().getTipoelemento().equals(Tipo.TIPO_LINK)){
     			url = traduccion.getLaurl();
     		}

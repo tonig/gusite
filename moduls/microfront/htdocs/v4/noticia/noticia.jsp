@@ -63,7 +63,7 @@
 							<h3 id="titolNoticia"><bean:write name="MVS_noticia" property="traduce.titulo" filter="false"/></h3>
 							<p id="subtitol"><bean:write name="MVS_noticia" property="traduce.subtitulo" filter="false"/></p>
 							<logic:notEmpty name="MVS_noticia" property="imagen">
-								<img id="imgNoticia" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="imagen.id" />&amp;id=<bean:write name="MVS_noticia" property="imagen.id" />" <bean:write name='MVS_anchoImg'/> alt=""/>						
+								<img id="imgNoticia" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="imagen.id" />&amp;id=<bean:write name="MVS_noticia" property="imagen.id" />&amp;nombre=<bean:write name="MVS_noticia" property="imagen.nombre" />" <bean:write name='MVS_anchoImg'/> alt=""/>						
 							</logic:notEmpty>
 							<p id="fontNoticia"><bean:write name="MVS_noticia" property="fpublicacion" format="dd/MM/yyyy"/><logic:notEmpty name="MVS_noticia" property="traduce.fuente"> - <bean:write name="MVS_noticia" property="traduce.fuente" filter="false"/></logic:notEmpty></p>
 							<p><bean:write name="MVS_noticia" property="traduce.texto" filter="false"/></p>	
@@ -86,7 +86,7 @@
 							<logic:notEmpty name="MVS_noticia" property="traduce.docu">
 								<p><bean:message key="noticia.descdocumento"/></p>
 								<p><bean:message key="general.archivo"/> <bean:write name="MVS_noticia" property="traduce.docu.mime" />, <bean:write name="MVS_noticia" property="traduce.docu.peso" /> bytes - 
-								<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;id=<bean:write name="MVS_noticia" property="traduce.docu.id" />" target="blank"><bean:write name="MVS_noticia" property="traduce.docu.nombre" /></a></p>
+								<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_noticia" property="id" />ZI<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;id=<bean:write name="MVS_noticia" property="traduce.docu.id" />&amp;nombre=<bean:write name="MVS_noticia" property="traduce.docu.nombre" />" target="blank"><bean:write name="MVS_noticia" property="traduce.docu.nombre" /></a></p>
 							</logic:notEmpty>
 							<logic:notEmpty name="MVS_noticia" property="traduce.laurl">
 								<p>

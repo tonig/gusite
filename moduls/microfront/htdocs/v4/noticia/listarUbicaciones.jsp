@@ -64,7 +64,7 @@
 												</h4>
 												</logic:notEmpty>
 												<logic:notEmpty name="i" property="imagen">
-													<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />" alt="<bean:write name="i" property="traduce.titulo" ignore="true" filter="false"/>"  align="middle"/>
+													<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />&amp;nombre=<bean:write name="i" property="imagen.nombre" />" alt="<bean:write name="i" property="traduce.titulo" ignore="true" filter="false"/>"  align="middle"/>
 												</logic:notEmpty>
 												<logic:notEmpty name="i" property="traduce.texto">	
 													<p>									
@@ -74,7 +74,7 @@
 												<logic:notEmpty name="i" property="traduce.docu">
 													<p><bean:message key="noticia.descdocumento"/></p>
 													<p><bean:message key="general.archivo"/> <bean:write name="i" property="traduce.docu.mime" />, <bean:write name="i" property="traduce.docu.peso" /> bytes - 
-													<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.docu.id" />&amp;id=<bean:write name="i" property="traduce.docu.id" />" target="blank"><bean:write name="i" property="traduce.docu.nombre" /></a></p>
+													<a href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="traduce.docu.id" />&amp;id=<bean:write name="i" property="traduce.docu.id" />&amp;nombre=<bean:write name="i" property="traduce.docu.nombre" />" target="blank"><bean:write name="i" property="traduce.docu.nombre" /></a></p>
 												</logic:notEmpty>
 											</div>
 										</div>

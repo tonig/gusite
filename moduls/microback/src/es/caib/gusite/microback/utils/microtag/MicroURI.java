@@ -17,13 +17,27 @@ public class MicroURI {
 	 * @param iddoc
 	 * @return String
 	 */
+	@Deprecated
 	public static String uriImg(String constante, long iditem, long iddoc) {
 		String retorno="";
 		retorno="archivopub.do?ctrl=" + constante + iditem + Microback.separatordocs + iddoc + "&id=" + iddoc;
 		return retorno;
 	}
 	
-	
+	/**
+	 * Método que devuelve la nueva uri de acceso a un documento.
+	 * 
+	 * @param nombreDoc
+	 * @param nombreSite
+	 * @return String la nueva uri con el nombre del documento y el nombre del site
+	 */
+	public static String uriImg(String nombreDoc, String nombreSite) {
+		String retorno = "";
+		retorno = "archivopub.do?nombre=" + nombreDoc + "&uri=" + nombreSite;
+		return retorno;
+	}
+
+
 	/**
 	 * Método que devuelve la uri de acceso a una noticia
 	 * @param idsite

@@ -61,9 +61,9 @@
 
 																	<div class="single">
 																		<logic:notEmpty name="i" property="imagen">
-																				<a rel="lightbox[fotos]" href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />"
+																				<a rel="lightbox[fotos]" href="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />&amp;nombre=<bean:write name="i" property="imagen.nombre" />"
 																				   title="<bean:write name="i" property="traduce.titulo" ignore="true" filter="false"/>">
-																					<img style="height:<bean:write name='MVS_altoFoto'/>px" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />" />
+																					<img style="height:<bean:write name='MVS_altoFoto'/>px" src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="i" property="id" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />&amp;nombre=<bean:write name="i" property="imagen.nombre" />" />
 																				</a>
 																				
 																		</logic:notEmpty>																																						

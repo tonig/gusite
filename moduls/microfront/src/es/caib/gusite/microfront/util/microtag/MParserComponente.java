@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 
 import es.caib.gusite.microfront.Microfront;
 import es.caib.gusite.micromodel.Componente;
+import es.caib.gusite.micromodel.Microsite;
 import es.caib.gusite.micromodel.Noticia;
 import es.caib.gusite.micromodel.TraduccionComponente;
 import es.caib.gusite.micromodel.TraduccionNoticia;
@@ -155,6 +156,7 @@ public class MParserComponente extends MParserHTML {
 		ResourceBundle rb =	ResourceBundle.getBundle("ApplicationResources_front", new Locale(idioma.toUpperCase(), idioma.toUpperCase()));
 
 		try {			
+			Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
 			
 			NoticiaDelegate noticiadel = DelegateUtil.getNoticiasDelegate();
 	    	noticiadel.init();noticiadel.setPagina(1);noticiadel.setTampagina(componente.getNumelementos().intValue());
@@ -186,11 +188,12 @@ public class MParserComponente extends MParserHTML {
         				String longitud = noti.getLongitud();
         				String color = noti.getColorIcono();
         				String subtitulo = StringUtils.isEmpty(((TraduccionNoticia)noti.getTraduccion(idioma)).getSubtitulo())?"":"				<h4>"+((TraduccionNoticia)noti.getTraduccion(idioma)).getSubtitulo()+"</h4>\n";
-        				String imagen = noti.getImagen()==null?"":"				<img src=\""+MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue())+"\" alt=\""+titulo+"\" />\n";
+        				String imagen = noti.getImagen()==null?"":"				<img src=\""+MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri())+"\" alt=\""+titulo+"\" />\n";
         				String texto = StringUtils.isEmpty(((TraduccionNoticia)noti.getTraduccion(idioma)).getTexto())?"":"				<p>"+((TraduccionNoticia)noti.getTraduccion(idioma)).getTexto()+"</p>\n";
         				String documento = ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu()==null?"":"				<p>"+rb.getString("noticia.descdocumento")+"</p>\n" + 
         						"				<p>" + rb.getString("general.archivo") + " " + ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getMime() + ", " + ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getPeso() +" bytes - " +
-								"<a href=\"archivopub.do?ctrl="+ Microfront.RNOTICIA + noti.getId()+"ZI" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getId() + "&amp;id="+((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getId() + "\" target=\"blank\">"+ ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getNombre() + "</a></p>\n";
+								"<a href=\"" + MicroURI.uriImg(((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getNombre(), microsite.getUri()) +
+								"\" target=\"blank\">"+ ((TraduccionNoticia)noti.getTraduccion(idioma)).getDocu().getNombre() + "</a></p>\n";
         				
     					
         				retorno.append("	<div style=\"display: none;\" class=\"gusiteMapsMarker GM" + componente.getId() + "\">\n" ); 
@@ -250,7 +253,7 @@ public class MParserComponente extends MParserHTML {
 		ResourceBundle rb =	ResourceBundle.getBundle("ApplicationResources_front", new Locale(idioma.toUpperCase(), idioma.toUpperCase()));
 
 		try {
-			
+			Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
 			
 			NoticiaDelegate noticiadel = DelegateUtil.getNoticiasDelegate();
 	    	noticiadel.init();noticiadel.setPagina(1);noticiadel.setTampagina(componente.getNumelementos().intValue());
@@ -286,10 +289,10 @@ public class MParserComponente extends MParserHTML {
             					retorno.append("<td style=\"width:1%\" >");
             					retorno.append("<a href=\"" + MicroURI.uriNoticia(idmicrosite, noti.getId(), idioma) + "\">");
     		        			if (noti.getImagen()!=null)
-    		        				retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" alt=\"\" class=\"imagen\" />");
+    		        				retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" alt=\"\" class=\"imagen\" />");
     		        			else {
 	            					if (componente.getImagenbul()!=null) {
-	            						retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RMICROSITE, idmicrosite.longValue(), componente.getImagenbul().getId().longValue()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />&nbsp;");
+	            						retorno.append("<img src=\"" + MicroURI.uriImg(componente.getImagenbul().getNombre(), microsite.getUri()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />&nbsp;");
 	            					} else {
 	            						retorno.append("<img src=\"imgs/listados/bullet_gris.gif\" alt=\"\" /> &nbsp;");
 	            					}
@@ -301,10 +304,10 @@ public class MParserComponente extends MParserHTML {
             				} else {
             					retorno.append("<td style=\"width:1%\" >");
     		        			if (noti.getImagen()!=null)
-    		        				retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" width=\"48\" height=\"48\" alt=\"\" class=\"imagen\" width=\"266\" height=\"127\" />&nbsp;");
+    		        				retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" width=\"48\" height=\"48\" alt=\"\" class=\"imagen\" width=\"266\" height=\"127\" />&nbsp;");
     		        			else{
 	            					if (componente.getImagenbul()!=null) {
-	            						retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RMICROSITE, idmicrosite.longValue(), componente.getImagenbul().getId().longValue()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />&nbsp;");
+	            						retorno.append("<img src=\"" + MicroURI.uriImg(componente.getImagenbul().getNombre(), microsite.getUri()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />&nbsp;");
 	            					} else {
 	            						retorno.append("<img src=\"imgs/listados/bullet_gris.gif\" alt=\"\" /> &nbsp;");
 	            					}
@@ -363,7 +366,6 @@ public class MParserComponente extends MParserHTML {
 		ResourceBundle rb =	ResourceBundle.getBundle("ApplicationResources_front", new Locale(idioma.toUpperCase(), idioma.toUpperCase()));
 		
 		try {
-			
 			NoticiaDelegate noticiadel = DelegateUtil.getNoticiasDelegate();
 	    	noticiadel.init();noticiadel.setPagina(1);noticiadel.setTampagina(componente.getNumelementos().intValue());
 	    	java.sql.Date dt = new java.sql.Date((new Date()).getTime());
@@ -385,6 +387,9 @@ public class MParserComponente extends MParserHTML {
         			retorno.append("<table width=\"100%\" border=\"0\" cellPadding=\"0\" cellSpacing=\"0\" id=\"element" + componente.getId() + "\">");
             		Iterator<?> iter = listanoticias.iterator();
             		int cont=0;
+
+            		Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
+					
             		// Si SoloImagen, es mostra en forma de mosaic a dues columnes
             		String nCols = (componente.getSoloimagen().equals("S"))?"":"<tr>";
             		while (iter.hasNext()) {
@@ -394,17 +399,18 @@ public class MParserComponente extends MParserHTML {
             					//en el caso de que sólo imágenes
             					retorno.append("<td style=\"width:1%\" >");
             					retorno.append("<a href=\"" + MicroURI.uriNoticia(idmicrosite, noti.getId(), idioma) + "\">");
-    		        			if (noti.getImagen()!=null)
-    		        				retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />");
-    		        			else 
+    		        			if (noti.getImagen()!=null) {
+    		        				retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />");
+    		        			} else { 
     		        				retorno.append(((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo());
+    		        			}
     		        			retorno.append("</a>");
     		        			retorno.append("</td><td>&nbsp;</td> \n");
     		        			
             				} else {
             					retorno.append("<td style=\"width:1%\" >");
             					if (componente.getImagenbul()!=null) {
-            						retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RMICROSITE, idmicrosite.longValue(), componente.getImagenbul().getId().longValue()) + "\" alt=\"\" class=\"imagen\" />");
+            						retorno.append("<img src=\"" + MicroURI.uriImg(componente.getImagenbul().getNombre(), microsite.getUri()) + "\" alt=\"\" class=\"imagen\" />");
             					} else {
             						retorno.append("<img src=\"imgs/listados/bullet_gris.gif\" alt=\"\" />");	
             					}
@@ -452,8 +458,6 @@ public class MParserComponente extends MParserHTML {
 
 		ResourceBundle rb =	ResourceBundle.getBundle("ApplicationResources_front", new Locale(idioma.toUpperCase(), idioma.toUpperCase()));
 		try {
-
-			
 			NoticiaDelegate noticiadel = DelegateUtil.getNoticiasDelegate();
 	    	noticiadel.init();noticiadel.setPagina(1);noticiadel.setTampagina(componente.getNumelementos().intValue());
 	    	java.sql.Date dt = new java.sql.Date((new Date()).getTime());
@@ -476,6 +480,9 @@ public class MParserComponente extends MParserHTML {
         			retorno.append("<table width=\"100%\" border=\"0\" cellPadding=\"0\" cellSpacing=\"0\" id=\"element" + componente.getId() + "\">");
             		Iterator<?> iter = listanoticias.iterator();
             		int cont=0;
+
+            		Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
+    				
             		// Si SoloImagen, es mostra en forma de mosaic a dues columnes
             		String nCols = (componente.getSoloimagen().equals("S"))?"":"<tr>";
             		while (iter.hasNext()) {
@@ -486,17 +493,18 @@ public class MParserComponente extends MParserHTML {
             					//en el caso de que sólo imágenes
             					retorno.append("<td style=\"width:1%\" >");
             					retorno.append("<a href=\"" + MicroURI.uriNoticia(idmicrosite, noti.getId(), idioma) + "\">");
-    		        			if (noti.getImagen()!=null)
-    		        				retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />");
-    		        			else 
+    		        			if (noti.getImagen()!=null) {
+    		        				retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" alt=\"" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo() + "\" class=\"imagen\" />");
+    		        			} else { 
     		        				retorno.append(((TraduccionNoticia)noti.getTraduccion(idioma)).getTitulo());
+    		        			}
     		        			retorno.append("</a>");
     		        			retorno.append("</td><td>&nbsp;</td> \n");
     		        			
             				} else {
             					retorno.append("<td style=\"width:1%\" >");
             					if (componente.getImagenbul()!=null) {
-            						retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RMICROSITE, idmicrosite.longValue(), componente.getImagenbul().getId().longValue()) + "\" alt=\"\" class=\"imagen\" />");
+            						retorno.append("<img src=\"" + MicroURI.uriImg(componente.getImagenbul().getNombre(), microsite.getUri()) + "\" alt=\"\" class=\"imagen\" />");
             					} else {
             						retorno.append("<img src=\"imgs/listados/bullet_gris.gif\" alt=\"\" />");
             					}

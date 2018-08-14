@@ -92,7 +92,7 @@
 												<!--  es visible -->
 													<h3><bean:write name="i" property="traduce.titulo" ignore="true"/></h3>
 													<logic:present name="i" property="imagen">
-														<p><img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" /> " alt="" /></p>
+														<p><img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagen.id" />&amp;id=<bean:write name="i" property="imagen.id" />&amp;nombre=<bean:write name="i" property="imagen.nombre" /> " alt="" /></p>
 													</logic:present>		
 													<bean:define id="total" value="0" />
 													<logic:notEmpty name="i" property="nrespuestas" >	

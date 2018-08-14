@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.caib.gusite.microfront.Microfront;
+import es.caib.gusite.micromodel.Microsite;
 import es.caib.gusite.micromodel.Noticia;
 import es.caib.gusite.micromodel.Tipo;
 import es.caib.gusite.micromodel.TraduccionNoticia;
@@ -64,6 +65,9 @@ public class MParserElemento extends MParserHTML {
         	retorno.append("<h2>" + value + "</h2>");
         	if (listanoticias.size()!=0) {
         		retorno.append("<ul>");
+
+        		Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
+
         		Iterator<?> iter = listanoticias.iterator();
         		while (iter.hasNext()) {
         				java.text.SimpleDateFormat dia = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -71,8 +75,9 @@ public class MParserElemento extends MParserHTML {
         				//la añadimos si realmente es del tipo noticia
         				if (noti.getTipo().getTipoelemento().equals(Microfront.ELEM_NOTICIA)) {
 	        				retorno.append("<li>");
-	        				if (noti.getImagen()!=null)
-	        					retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" width=\"48\" height=\"48\" alt=\"\" />");
+	        				if (noti.getImagen()!=null) {
+	        					retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" width=\"48\" height=\"48\" alt=\"\" />");
+	        				}
 	        				if (noti.getFpublicacion()!=null)
 	        					retorno.append(dia.format(noti.getFpublicacion()) + " - <em>" + ((TraduccionTipo)noti.getTipo().getTraduccion(idioma)).getNombre() + "</em>");
 	        				retorno.append("<br />");
@@ -129,6 +134,9 @@ public class MParserElemento extends MParserHTML {
         	retorno.append("<h2>" + nombre_elemento + "</h2>");
         	if (listanoticias.size()!=0) {
         		retorno.append("<ul>");
+
+        		Microsite microsite = DelegateUtil.getMicrositeDelegate().obtenerMicrosite(idmicrosite);
+
         		Iterator<?> iter = listanoticias.iterator();
         		while (iter.hasNext()) {
         				java.text.SimpleDateFormat dia = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -137,8 +145,9 @@ public class MParserElemento extends MParserHTML {
         				retorno.append("<li>");
         				
         				if (tipo.getTipoelemento().equals(Microfront.ELEM_NOTICIA)) { 
-		        			if (noti.getImagen()!=null)
-		        				retorno.append("<img src=\"" + MicroURI.uriImg(Microfront.RNOTICIA, noti.getId().longValue(), noti.getImagen().getId().longValue()) + "\" width=\"48\" height=\"48\" alt=\"\" />");
+		        			if (noti.getImagen()!=null) {
+		        				retorno.append("<img src=\"" + MicroURI.uriImg(noti.getImagen().getNombre(), microsite.getUri()) + "\" width=\"48\" height=\"48\" alt=\"\" />");
+		        			}
 		        			retorno.append(noti.getFpublicacion()!=null?dia.format(noti.getFpublicacion()):"&nbsp;");
 		        			retorno.append((((TraduccionNoticia)noti.getTraduccion(idioma)).getFuente()!=null)?" - <em>" + ((TraduccionNoticia)noti.getTraduccion(idioma)).getFuente() + "</em>":"");
 		        			retorno.append("<br />");

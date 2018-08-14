@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.RedirectingActionForward;
 
 import es.caib.gusite.microfront.base.bean.ErrorMicrosite;
+import es.caib.gusite.microback.utils.microtag.MicroURI;
 import es.caib.gusite.microfront.BaseAction;
 import es.caib.gusite.microfront.Microfront;
 import es.caib.gusite.microfront.noticia.util.Bdnoticia;
@@ -30,7 +31,6 @@ public class ElementoDocumentoAction extends BaseAction  {
 	
 	  public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		  	//SSSSSxxxZIyyy
-		  	String forwardlocal="archivopub.do?ctrl=";   
 		  	try {
 			    	 
 			  	Bdnoticia bdnoticia = new Bdnoticia(request);
@@ -40,7 +40,7 @@ public class ElementoDocumentoAction extends BaseAction  {
 		  			request.setAttribute("MVS_noticia", bdnoticia.getNoticia());
 				    request.setAttribute("MVS_tiponoticia", bdnoticia.getDesctiponoticia());
 				    String iddocumento = "" + ((TraduccionNoticia)bdnoticia.getNoticia().getTraduccion(bdnoticia.getIdioma())).getDocu().getId().longValue();
-				    forwardlocal+= Microfront.RMICROSITE + bdnoticia.getIdsite().longValue() + Microfront.separatordocs + iddocumento + "&id=" + iddocumento;
+				  	String forwardlocal=MicroURI.uriImg(Microfront.RMICROSITE, bdnoticia.getIdsite().longValue(), Long.parseLong(iddocumento));   
 				    
 			        ActionForward elforward = new RedirectingActionForward();
 			        elforward.setPath(forwardlocal);

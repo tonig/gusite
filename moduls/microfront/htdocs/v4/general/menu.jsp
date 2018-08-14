@@ -132,7 +132,7 @@
                                             <logic:iterate id="j" name="i" property="traducciones">
                                                 <bean:define id="idiomaIter" name="j" property="key"/>
                                                 <% if ((("" + idiomaIter).toUpperCase()).equals("" + idiomaDefault)) { %>
-                                                    <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagenmenu.id"/>&id=<bean:write name="i" property="imagenmenu.id"/>" alt="<bean:write name="j" property="value.nombre"/>"/>
+                                                    <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagenmenu.id"/>&id=<bean:write name="i" property="imagenmenu.id"/>&amp;nombre=<bean:write name="i" property="imagenmenu.nombre" />" alt="<bean:write name="j" property="value.nombre"/>"/>
                                                 <% } %>
                                             </logic:iterate>
 
@@ -172,7 +172,7 @@
                                                                 <logic:iterate id="k" name="j" property="traducciones">
                                                                     <bean:define id="idiomaIter" name="k" property="key"/>
                                                                     <% if ((("" + idiomaIter).toUpperCase()).equals("" + idiomaDefault)) { %>
-                                                                        <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>" alt="<bean:write name="k" property="value.nombre"/>"/>
+                                                                        <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>&amp;nombre=<bean:write name="j" property="imagenmenu.nombre" />" alt="<bean:write name="k" property="value.nombre"/>"/>
                                                                     <% } %>
                                                                 </logic:iterate>
 
@@ -214,7 +214,7 @@
                                                                 <logic:iterate id="k" name="j" property="traducciones">
                                                                     <bean:define id="idiomaIter" name="k" property="key"/>
                                                                     <% if ((("" + idiomaIter).toUpperCase()).equals("" + idiomaDefault)) { %>
-                                                                        <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>" alt="<bean:write name="k" property="value.nombre"/>"/>
+                                                                        <img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>&amp;nombre=<bean:write name="j" property="imagenmenu.nombre" />" alt="<bean:write name="k" property="value.nombre"/>"/>
                                                                     <% } %>
                                                                 </logic:iterate>
 

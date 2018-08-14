@@ -145,7 +145,7 @@ int indiceX=1;
 		url+="\">";
 	
 		url+="<a href=\"archivopub.do?ctrl=MCRST"+idsite;
-		url+="ZI"+id+"&id="+id+"\">"+nom+"</a>";
+		url+="ZI"+id+"&id="+id+"&nombre="+nom+"\">"+nom+"</a>";
 		//url+="ZI"+id+"&id="+id+"\">"+nom+"</a>";
 			
 		tinyMCE.execCommand('mceInsertContent',false,url);
@@ -160,7 +160,7 @@ int indiceX=1;
 		
 	
 			url="<img alt=\""+nom+"\" src=\"archivopub.do?ctrl=MCRST"+idsite;
-			url+="ZI"+id+"&id="+id+"\">";
+			url+="ZI"+id+"&id="+id+"&nombre="+nom+"\">";
 	
 		tinyMCE.execCommand('mceInsertContent',false,url);
 		tinyMCEPopup.close();

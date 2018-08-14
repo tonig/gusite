@@ -15,6 +15,7 @@ import es.caib.gusite.microback.base.bean.MenuRecurso;
 import es.caib.gusite.microback.base.bean.Recurso;
 import es.caib.gusite.microback.utils.Cadenas;
 import es.caib.gusite.microback.utils.Fechas;
+import es.caib.gusite.microback.utils.microtag.MicroURI;
 import es.caib.gusite.micromodel.Agenda;
 import es.caib.gusite.micromodel.Archivo;
 import es.caib.gusite.micromodel.Contacto;
@@ -729,7 +730,7 @@ public class Bdrecursos {
 				  recurso.setTipo(archi.getMime());
 				  recurso.setTitulo(archi.getNombre());
 				  recurso.setUrlnom((micronombre+">"+titmenu+">"+archi.getNombre()).replaceAll("'","´"));
-				  recurso.setUrl("archivopub.do?ctrl=MCRST" + microsite.getId().longValue() + "ZI" + archi.getId().longValue() + "&id=" + archi.getId().longValue());
+				  recurso.setUrl(MicroURI.uriImg(archi.getNombre(), microsite.getUri()));
 				  menurecurso.getListacosas().add(recurso);
 			  }
 			  listaarchivos.add(menurecurso);
@@ -780,7 +781,7 @@ public class Bdrecursos {
 						  recurso.setTipo(archi.getMime());
 						  recurso.setTitulo(archi.getNombre());
 						  recurso.setUrlnom((micronombre+">"+titmenu+">"+archi.getNombre()).replaceAll("'","´"));
-						  recurso.setUrl("archivopub.do?ctrl=" + Microback.RCONTENIDO + idcontenidolong.longValue() + "ZI" + archi.getId().longValue() + "&id=" + archi.getId().longValue());
+						  recurso.setUrl(MicroURI.uriImg(archi.getNombre(), microsite.getUri()));
 						  menurecurso.getListacosas().add(recurso);
 					  }
 					  listaarchivos.add(menurecurso);

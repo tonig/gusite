@@ -53,7 +53,9 @@ public class MParserHTML {
 			}
 
 			retorno.append("<div id=\"enllasDest\" style=\"background:url("
-					+ MicroURI.uriImg(Microfront.RMICROSITE, microsite.getId().longValue(), microsite.getImagenCampanya().getId().longValue())
+					/** ddorado: Cambio de la url de los documentos para que no dependan de la base de datos instalada
+					+ MicroURI.uriImg(Microfront.RMICROSITE, microsite.getId().longValue(), microsite.getImagenCampanya().getId().longValue())*/
+					+ MicroURI.uriImg(microsite.getImagenCampanya().getNombre(), microsite.getUri())
 					+ ") no-repeat #fff;\" >");
 			retorno.append("<h2 class=\"invisible\">Destaquem</h2>");
 			if (UrlCampanya != null) {

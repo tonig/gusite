@@ -52,7 +52,7 @@
 					    <logic:iterate id="i" name="MVS_menu">
 					    	<h3>
 						    	<logic:present name="i" property="imagenmenu">
-							    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagenmenu.id"/>&id=<bean:write name="i" property="imagenmenu.id"/>" alt="<bean:write name="i" property="traduce.nombre"/>"/>
+							    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="i" property="imagenmenu.id"/>&id=<bean:write name="i" property="imagenmenu.id"/>&amp;nombre=<bean:write name="i" property="imagenmenu.nombre" />" alt="<bean:write name="i" property="traduce.nombre"/>"/>
 						    	</logic:present>
 					    		<bean:write name="i" property="traduce.nombre"/>
 					    	</h3>
@@ -74,7 +74,7 @@
 								    	<logic:notEqual name="tamano" value="1">
 									    	<li><a href="#">
 		    							    	<logic:present name="j" property="imagenmenu">
-											    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>" alt="<bean:write name="j" property="traduce.nombre"/>"/>
+											    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>&amp;nombre=<bean:write name="j" property="imagenmenu.nombre" />" alt="<bean:write name="j" property="traduce.nombre"/>"/>
 										    	</logic:present>
 									    		<bean:write name="j" property="traduce.nombre"/>
 									    		</a>
@@ -93,7 +93,7 @@
 											<bean:define id="idconteactual" name="j" property="listacosas[0].id"/>
 											<li>
 			    							    	<logic:present name="j" property="imagenmenu">
-												    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>" alt="<bean:write name="j" property="traduce.nombre"/>"/>
+												    	<img src="archivopub.do?ctrl=MCRST<bean:write name="MVS_idsite" />ZI<bean:write name="j" property="imagenmenu.id"/>&id=<bean:write name="j" property="imagenmenu.id"/>&amp;nombre=<bean:write name="j" property="imagenmenu.nombre" />" alt="<bean:write name="j" property="traduce.nombre"/>"/>
 											    	</logic:present>
 													<a href="#"><bean:write name="j" property="traduce.nombre"/></a>
 											</li> 	

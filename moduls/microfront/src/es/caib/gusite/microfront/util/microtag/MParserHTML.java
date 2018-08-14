@@ -48,7 +48,7 @@ public class MParserHTML {
 			if (TituloCampanya == null) TituloCampanya = "";
 			
 			if (_version.equals("2")) {
-				retorno.append("<div id=\"enllasDest\" style=\"background:url(" + MicroURI.uriImg(Microfront.RMICROSITE, microsite.getId().longValue(), microsite.getImagenCampanya().getId().longValue()) + ") no-repeat #fff;\" >");
+				retorno.append("<div id=\"enllasDest\" style=\"background:url(" + MicroURI.uriImg(microsite.getImagenCampanya().getNombre(), microsite.getUri()) + ") no-repeat #fff;\" >");
 				retorno.append("<h2 class=\"invisible\">Destaquem</h2>");
 				if (UrlCampanya != null)
 				{				
@@ -68,7 +68,7 @@ public class MParserHTML {
 				}
 				retorno.append("<div id=\"enllasDestPeu\"></div>");
 			} else {				
-				retorno.append("<div id=\"enllasDest\" style=\"background:url(" + MicroURI.uriImg(Microfront.RMICROSITE, microsite.getId().longValue(), microsite.getImagenCampanya().getId().longValue()) + ") no-repeat #fff;\" >");
+				retorno.append("<div id=\"enllasDest\" style=\"background:url(" + MicroURI.uriImg(microsite.getImagenCampanya().getNombre(), microsite.getUri()) + ") no-repeat #fff;\" >");
 				retorno.append("<h2 class=\"invisible\">Destaquem</h2>");
 				if (UrlCampanya != null)
 				{

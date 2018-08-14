@@ -52,7 +52,7 @@
 						<td id="info">
 							<p style="text-align:center;">
 								<logic:notEmpty name="MVS_microsite" property="imagenPrincipal">
-										<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_microsite" property="id" />ZI<bean:write name="MVS_microsite" property="imagenPrincipal.id" />&amp;id=<bean:write name="MVS_microsite" property="imagenPrincipal.id" />" alt="" />
+										<img src="archivopub.do?ctrl=<bean:write name="MVS_servicio"/><bean:write name="MVS_microsite" property="id" />ZI<bean:write name="MVS_microsite" property="imagenPrincipal.id" />&amp;id=<bean:write name="MVS_microsite" property="imagenPrincipal.id" />&amp;nombre=<bean:write name="MVS_microsite" property="imagenPrincipal.nombre" />" alt="" />
 								</logic:notEmpty>
 							</p>
 						</td>
