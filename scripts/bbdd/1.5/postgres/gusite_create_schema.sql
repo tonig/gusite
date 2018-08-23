@@ -28,8 +28,8 @@ Create table gus_agenda (
     age_miccod Numeric NOT NULL ,
     age_activi Numeric NOT NULL ,
     age_organi Varchar (256),
-    age_inicio Date NOT NULL ,
-    age_fin Date,
+    age_inicio timestamp NOT NULL ,
+    age_fin timestamp,
     age_visib Varchar (1) Default 'S',
 primary key (age_codi) 
 );
@@ -68,8 +68,8 @@ primary key (cid_codidi,cid_concod)
 
 Create table gus_conten (
     con_codi Numeric NOT NULL ,
-    con_caduca Date,
-    con_public Date NOT NULL ,
+    con_caduca timestamp,
+    con_public timestamp NOT NULL ,
     con_visib Varchar (1) Default 'S',
     con_orden Numeric,
     con_mnucod Numeric,
@@ -82,7 +82,7 @@ Create table gus_convocatoria (
     codi Numeric(19,0) NOT NULL ,
     nombre Varchar (255),
     descripcion Varchar (255),
-    data_envio Date,
+    data_envio timestamp,
     microsite_id Numeric,
     reenvio_error Numeric(1,0),
     encuesta_id Numeric(19,0),
@@ -102,7 +102,7 @@ Create table gus_correo (
     noenviar Numeric(1,0),
     nombre Varchar (255),
     apellidos Varchar (512),
-    ultimo_envio Date,
+    ultimo_envio timestamp,
     error_envio Varchar (2000),
     intento_envio Numeric,
 primary key (correo) 
@@ -111,7 +111,7 @@ primary key (correo)
 Create table gus_distrib_convocatoria (
     convocatoria_id Numeric(19,0) NOT NULL ,
     distrib_id Numeric(19,0) NOT NULL ,
-    ultimo_envio Date,
+    ultimo_envio timestamp,
     error_envio Varchar (255),
 primary key (convocatoria_id,distrib_id) 
 );
@@ -138,8 +138,8 @@ primary key (eid_codidi,eid_enccod)
 Create table gus_encust (
     enc_codi Numeric NOT NULL ,
     enc_miccod Numeric NOT NULL ,
-    enc_public Date,
-    enc_caduca Date,
+    enc_public timestamp,
+    enc_caduca timestamp,
     enc_visib Varchar (1) Default 'S',
     enc_indiv Varchar (1) Default 'S',
     enc_pagina Numeric,
@@ -162,7 +162,7 @@ Create table gus_faq (
     faq_codi Numeric NOT NULL ,
     faq_miccod Numeric NOT NULL ,
     faq_codtem Numeric,
-    faq_fecha Date,
+    faq_fecha timestamp,
     faq_visib Varchar (1) Default 'S',
 primary key (faq_codi) 
 );
@@ -293,7 +293,7 @@ primary key (mid_codidi,mid_miccod)
 Create table gus_micros (
     mic_codi Numeric NOT NULL ,
     mic_coduni Numeric,
-    mic_fecha Date Default now(),
+    mic_fecha timestamp Default now(),
     mic_visib Varchar (1) Default 'S'                    NOT NULL ,
     mic_imagen Numeric,
     mic_menu Varchar (1) Default 'N'                    NOT NULL ,
@@ -361,8 +361,8 @@ Create table gus_notics (
     not_codi Numeric NOT NULL ,
     not_miccod Numeric NOT NULL ,
     not_imagen Numeric,
-    not_caduca Date,
-    not_public Date,
+    not_caduca timestamp,
+    not_public timestamp,
     not_visib Varchar (1) Default 'S',
     not_visweb Varchar (1) Default 'N',
     not_tipo Numeric NOT NULL ,
@@ -520,7 +520,7 @@ Create table gus_auditoria (
     aud_codi Numeric(19,0) NOT NULL ,
     aud_miccod Numeric,
     aud_usuari Varchar (256),
-    aud_fecha Date,
+    aud_fecha timestamp,
     aud_operacion Numeric(1,0),
     aud_entidad Varchar (50) NOT NULL ,
     aud_informacion Text,
@@ -534,7 +534,7 @@ Create table gus_fr_tema (
     fte_tema_padre Numeric(19,0) ,
     fte_nombre Varchar (255) NOT NULL  UNIQUE ,
     fte_css Numeric,
-    fte_actualizacion Date Default now() NOT NULL ,
+    fte_actualizacion timestamp Default now() NOT NULL ,
     fte_uri Varchar (32) NOT NULL  UNIQUE ,
  Constraint gus_fte_pk primary key (fte_codi) 
 );
@@ -581,8 +581,8 @@ CREATE TABLE gus_solrpd
     slp_tipo   Varchar(128),
     slp_idelem Numeric,
     slp_accion Numeric,
-    slp_feccre DATE,
-    slp_fecidx DATE,
+    slp_feccre timestamp,
+    slp_fecidx timestamp,
     slp_result    Numeric,
     slp_txterr    Varchar(300),
     slp_idarchivo Numeric,
@@ -594,8 +594,8 @@ CREATE TABLE gus_solrpd
 CREATE TABLE gus_soljob
   (
     job_id Numeric(19,0) NOT NULL,
-    job_fecini DATE DEFAULT now(),
-    job_fecfin DATE,
+    job_fecini timestamp DEFAULT now(),
+    job_fecfin timestamp,
     job_tipo   Varchar(20),
     job_descri Text,
     job_idelem Numeric(19,0),
