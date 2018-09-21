@@ -20,6 +20,7 @@ import es.caib.gusite.micromodel.Auditoria;
 import es.caib.gusite.micropersistence.delegate.DelegateException;
 import es.caib.gusite.micropersistence.delegate.DelegateUtil;
 import es.caib.gusite.micropersistence.exception.FicheroVacioException;
+import es.caib.gusite.micropersistence.exception.NombreFicheroExistenteException;
 import es.caib.gusite.micropersistence.util.ArchivoUtil;
 
 /**
@@ -170,6 +171,7 @@ public abstract class ArchivoFacadeEJB extends HibernateEJB {
 			Criteria criteriID = session.createCriteria(Archivo.class);
 			criteriID.add(Restrictions.eq("idmicrosite", site));
 			criteriID.add(Restrictions.eq("nombre", nombre));
+			criteriID.add(Restrictions.isNull("pagina"));
 
 			List<?> listArchi = criteriID.list();
 			Iterator<?> iterArchi = listArchi.iterator();
@@ -268,6 +270,24 @@ public abstract class ArchivoFacadeEJB extends HibernateEJB {
 		try {
 			final Transaction tx = session.beginTransaction();
 
+			//Comprobamos si existe algun archivo creado, faltaria comprobar el microsite
+			Criteria criteriID = session.createCriteria(Archivo.class);
+			criteriID.add(Restrictions.eq("nombre", a.getNombre()));
+			criteriID.add(Restrictions.eq("idmicrosite", a.getIdmicrosite()));
+			if(a.getPagina() == null){
+				criteriID.add(Restrictions.isNull("pagina"));
+			}else{
+				criteriID.add(Restrictions.eq("pagina", a.getPagina()));
+			}
+			
+			List<?> listArchi = criteriID.list();
+			
+			if(listArchi != null && !listArchi.isEmpty()){
+				throw new NombreFicheroExistenteException("Ya existe un fichero subido con ese nombre, por favor, indique otro nombre para subir el archivo");
+			}
+			
+			
+			
 			if (a.getDatos() == null) {
 				throw new FicheroVacioException("Fichero vacío.");
 			}

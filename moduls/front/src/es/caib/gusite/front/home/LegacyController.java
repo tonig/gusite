@@ -1370,7 +1370,7 @@ public class LegacyController extends FrontController {
 				}
 				throw new ExceptionFrontMicro(ErrorMicrosite.ERROR_MICRO_URI_MSG + nombresite);				
 			}
-			ctrlReal = ctrlFromIdSite(microsite.getId(), id);
+			ctrlReal = ctrlFromIdSite(microsite.getId(), id, ctrl.substring(0, 5));
 		} catch (ExceptionFrontMicro e) {
 			log.error(e.getMessage());
 			return this.getForwardError(microsite, DEFAULT_IDIOMA, model, ErrorMicrosite.ERROR_AMBIT_MICRO, response);
@@ -1429,8 +1429,8 @@ public class LegacyController extends FrontController {
 		return new Long(0);
 	}
 
-	private String ctrlFromIdSite(Long idMicosite, Long id) {
-		return Microfront.RCONTENIDO+idMicosite+Microfront.separatordocs+id;
+	private String ctrlFromIdSite(Long idMicosite, Long id, String ctrl) {
+		return ctrl+idMicosite+Microfront.separatordocs+id;
 	}
 
 	/**
